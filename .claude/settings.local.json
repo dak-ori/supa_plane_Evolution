@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\ndocs: ratify constitution v1.0.0 \\(Smooth Flight project principles\\)\n\n- Add PRD.md with full game requirements\n- Add recommendation.md with 5 core specs\n- Add constitution.md with 5 core principles:\n  - Performance-First \\(60fps\\)\n  - Vanilla JavaScript Only\n  - Modular System Architecture\n  - Cross-Platform Equality\n  - Simplicity Over Features\n- Setup speckit templates and commands\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+    ]
+  }
+}
