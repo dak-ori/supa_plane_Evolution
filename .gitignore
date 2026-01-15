@@ -1,0 +1,34 @@
+# Node.js / JavaScript
+node_modules/
+dist/
+build/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Test coverage
+coverage/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Build artifacts
+*.min.js
+*.map
