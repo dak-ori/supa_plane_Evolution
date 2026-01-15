@@ -21,7 +21,12 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:caniuse.com)",
       "Bash($env:SPECIFY_FEATURE=\"001-game-engine-core\")",
-      "Bash(git rev-parse:*)"
+      "Bash(git rev-parse:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat\\(001\\): implement game engine core with Canvas 2D rendering\n\n- Add core engine modules: Game, GameLoop, GameState, Renderer\n- Implement GameObject base class with position, rotation, scale\n- Add InputManager for mouse/touch/keyboard events\n- Create ObjectPool for efficient memory management\n- Include GameConfig for centralized configuration\n- Add FPSCounter utility for performance monitoring\n- Create index.html entry point and performance test page\n- Add design documents: plan, data-model, contracts, quickstart\n- Remove placeholder specs \\(002-005\\) for future features\n- Add CLAUDE.md with development guidelines\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(gh pr create:*)",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "WebFetch(domain:play.google.com)"
     ]
   }
 }
