@@ -3,7 +3,25 @@
     "allow": [
       "WebSearch",
       "Bash(git add:*)",
-      "Bash(git commit -m \"$\\(cat <<''EOF''\ndocs: ratify constitution v1.0.0 \\(Smooth Flight project principles\\)\n\n- Add PRD.md with full game requirements\n- Add recommendation.md with 5 core specs\n- Add constitution.md with 5 core principles:\n  - Performance-First \\(60fps\\)\n  - Vanilla JavaScript Only\n  - Modular System Architecture\n  - Cross-Platform Equality\n  - Simplicity Over Features\n- Setup speckit templates and commands\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git commit -m \"$\\(cat <<''EOF''\ndocs: ratify constitution v1.0.0 \\(Smooth Flight project principles\\)\n\n- Add PRD.md with full game requirements\n- Add recommendation.md with 5 core specs\n- Add constitution.md with 5 core principles:\n  - Performance-First \\(60fps\\)\n  - Vanilla JavaScript Only\n  - Modular System Architecture\n  - Cross-Platform Equality\n  - Simplicity Over Features\n- Setup speckit templates and commands\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git fetch:*)",
+      "Bash(ls:*)",
+      "Bash(powershell:*)",
+      "Bash(git checkout:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\ndocs: add all feature specifications \\(001-005\\)\n\nAdd 5 feature specifications for Smooth Flight game:\n- 001-game-engine-core: 60fps game loop, Canvas rendering, input handling\n- 002-aircraft-system: Aircraft spawning, movement, and path following\n- 003-path-drawing: Player path drawing interaction system\n- 004-collision-score: Collision detection and scoring system\n- 005-airport-level: Airport levels, weather, and unlock system\n\nEach spec includes:\n- User stories with acceptance scenarios\n- Functional requirements\n- Success criteria\n- Quality checklist\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Skill(speckit.clarify)",
+      "Skill(speckit.plan)",
+      "WebFetch(domain:web.dev)",
+      "WebFetch(domain:gameprogrammingpatterns.com)",
+      "WebFetch(domain:egghead.io)",
+      "WebFetch(domain:roblouie.com)",
+      "WebFetch(domain:codetheory.in)",
+      "WebFetch(domain:erikonarheim.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:caniuse.com)",
+      "Bash($env:SPECIFY_FEATURE=\"001-game-engine-core\")",
+      "Bash(git rev-parse:*)"
     ]
   }
 }

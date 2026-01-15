@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Performance Test - Smooth Flight Engine</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      font-family: monospace;
+      color: #fff;
+    }
+
+    #controls {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    #controls button {
+      display: block;
+      width: 100%;
+      margin: 5px 0;
+      padding: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #333;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 4px;
+    }
+
+    #controls button:hover {
+      background: #444;
+    }
+
+    #stats {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    #game-canvas {
+      touch-action: none;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="game-canvas"></canvas>
+
+  <div id="controls">
+    <h3>Performance Test</h3>
+    <button id="btn-add-10">Add 10 Objects</button>
+    <button id="btn-add-50">Add 50 Objects</button>
+    <button id="btn-clear">Clear All</button>
+    <button id="btn-toggle-fps">Toggle FPS (F)</button>
+    <button id="btn-pause">Pause/Resume (P)</button>
+  </div>
+
+  <div id="stats">
+    <div>Objects: <span id="object-count">0</span></div>
+    <div>State: <span id="game-state">-</span></div>
+    <div>Target: 55+ FPS with 20 objects</div>
+  </div>
+
+  <script type="module">
+    import { Game } from '../../src/engine/Game.js';
+    import { GameObject } from '../../src/engine/GameObject.js';
+
+    // 테스트용 움직이는 오브젝트
+    class TestBall extends GameObject {
+      constructor() {
+        super();
+        this.vx = 0;
+        this.vy = 0;
+        this.radius = 20;
+        this.color = '#ff6b6b';
+      }
+
+      update(deltaTime) {
+        this.x += this.vx * deltaTime;
+        this.y += this.vy * deltaTime;
+
+        // 경계 충돌 처리
+        if (this.x - this.radius < 0 || this.x + this.radius > 720) {
+          this.vx *= -1;
+          this.x = Math.max(this.radius, Math.min(720 - this.radius, this.x));
+        }
+        if (this.y - this.radius < 0 || this.y + this.radius > 1280) {
+          this.vy *= -1;
+          this.y = Math.max(this.radius, Math.min(1280 - this.radius, this.y));
+        }
+      }
+
+      render(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+
+      reset() {
+        super.reset();
+        this.vx = 0;
+        this.vy = 0;
+        this.radius = 20;
+        this.color = '#ff6b6b';
+      }
+    }
+
+    // 게임 초기화
+    const game = new Game('game-canvas', {
+      showFPS: true
+    });
+
+    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dfe6e9', '#a29bfe', '#fd79a8'];
+
+    function addObjects(count) {
+      for (let i = 0; i < count; i++) {
+        const ball = new TestBall();
+        ball.x = Math.random() * 680 + 20;
+        ball.y = Math.random() * 1240 + 20;
+        ball.vx = (Math.random() - 0.5) * 400;
+        ball.vy = (Math.random() - 0.5) * 400;
+        ball.radius = Math.random() * 15 + 10;
+        ball.color = colors[Math.floor(Math.random() * colors.length)];
+        ball.active = true;
+        game.addObject(ball);
+      }
+      updateStats();
+    }
+
+    function clearObjects() {
+      game.objects.length = 0;
+      updateStats();
+    }
+
+    function updateStats() {
+      document.getElementById('object-count').textContent = game.objects.length;
+      document.getElementById('game-state').textContent = game.state;
+    }
+
+    // 상태 변경 콜백
+    game.onStateChange((newState, oldState) => {
+      updateStats();
+    });
+
+    // 초기 20개 오브젝트로 시작
+    addObjects(20);
+    game.start();
+
+    // 버튼 이벤트
+    document.getElementById('btn-add-10').onclick = () => addObjects(10);
+    document.getElementById('btn-add-50').onclick = () => addObjects(50);
+    document.getElementById('btn-clear').onclick = clearObjects;
+    document.getElementById('btn-toggle-fps').onclick = () => game.toggleFPS();
+    document.getElementById('btn-pause').onclick = () => {
+      if (game.state === 'PLAYING') {
+        game.pause();
+      } else if (game.state === 'PAUSED') {
+        game.resume();
+      }
+    };
+
+    // 키보드 이벤트
+    document.addEventListener('keydown', (e) => {
+      switch (e.key.toLowerCase()) {
+        case 'f':
+          game.toggleFPS();
+          break;
+        case 'p':
+          if (game.state === 'PLAYING') {
+            game.pause();
+          } else if (game.state === 'PAUSED') {
+            game.resume();
+          }
+          break;
+      }
+    });
+
+    // 주기적 상태 업데이트
+    setInterval(updateStats, 500);
+
+    window.game = game;
+
+    console.log('Performance Test Ready');
+    console.log('Target: 55+ FPS with 20+ moving objects');
+    console.log('Controls: F=FPS, P=Pause, buttons for object management');
+  </script>
+</body>
+</html>
